@@ -1,19 +1,19 @@
-H5P SDK UI
+H5P Library - Controls
 ==========
 
-[![Build Status](https://travis-ci.org/h5p/h5p-sdk-ui.svg?branch=master)](https://travis-ci.org/h5p/h5p-sdk-ui)
+[![Build Status](https://travis-ci.org/h5p/h5p-lib-controls.svg?branch=master)](https://travis-ci.org/h5p/h5p-lib-controls)
 
 ## Building
 
-Get the [h5p-sdk](https://github.com/h5p/h5p-sdk), and link it to this project.
+Get the [h5p-lib-controls](https://github.com/h5p/h5p-lib-controls), and link it to this project.
 
 ```bash
  cd ..
- git clone git@github.com:h5p/h5p-sdk.git
- cd h5p-sdk
+ git clone git@github.com:h5p/h5p-lib-controls.git
+ cd h5p-lib-controls
  npm link
  cd ../h5p-hub-client
- npm link h5p-sdk
+ npm link h5p-lib-controls
 ```
 
 ## Getting started

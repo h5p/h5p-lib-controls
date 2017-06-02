@@ -67,16 +67,32 @@ export default class Keyboard {
 
       case 37: // Left Arrow
       case 38: // Up Arrow
-        this.previousElement(event.target);
-        event.preventDefault();
+        // ignore with modifiers, so not to interfere with Chromevox
+        if(!this.hasChromevoxModifiers(event)) {
+          this.previousElement(event.target);
+          event.preventDefault();
+        }
         break;
       case 39: // Right Arrow
       case 40: // Down Arrow
-        this.nextElement(event.target);
-        event.preventDefault();
+        // ignore with modifiers, so not to interfere with Chromevox
+        if(!this.hasChromevoxModifiers(event)) {
+          this.nextElement(event.target);
+          event.preventDefault();
+        }
         break;
     }
   };
+
+  /**
+   * Checks if the Chromevox modifiers are pressed
+   *
+   * @param {KeyboardEvent} event Keyboard event
+   * @private
+   */
+  hasChromevoxModifiers(event) {
+    return event.shiftKey || event.ctrlKey;
+  }
 
   /**
    * Fires the previous element event

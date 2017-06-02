@@ -6,7 +6,7 @@ const config = {
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: "h5p-sdk-controls.js",
+    filename: "h5p-lib-controls.js",
     sourceMapFilename: '[file].map'
   },
   resolve: {
