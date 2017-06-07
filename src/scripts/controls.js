@@ -1,5 +1,5 @@
-import { setAttribute, removeAttribute, hasAttribute } from 'utils/elements';
-import { forEach, without } from 'utils/functional';
+import { setAttribute, removeAttribute, hasAttribute } from 'h5p-sdk/src/scripts/utils/elements';
+import { forEach, without } from 'h5p-sdk/src/scripts/utils/functional';
 import { Eventful } from './mixins/eventful';
 
 /**

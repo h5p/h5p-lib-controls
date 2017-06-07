@@ -1,12 +1,11 @@
 {
   "name": "h5p-lib-controls",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Library for adding user input to web applications",
   "scripts": {
     "test": "karma start",
     "build": "webpack",
-    "watch": "webpack --watch",
-    "dev": "lite-server"
+    "watch": "webpack --watch"
   },
   "keywords": [
     "h5p",
@@ -29,7 +28,6 @@
     "karma-jasmine": "^1.1.0",
     "karma-mocha-reporter": "^2.2.2",
     "karma-webpack": "^2.0.2",
-    "lite-server": "^2.2.2",
     "resolve-url-loader": "^2.0.2",
     "url-loader": "^0.5.8",
     "webpack": "^2.2.1"
