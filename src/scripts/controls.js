@@ -143,7 +143,7 @@ export default class Controls {
   firesEvent(type, el) {
     const index = this.elements.indexOf(el);
 
-    this.fire(type, {
+    return this.fire(type, {
       element: el,
       index: index,
       elements: this.elements,
