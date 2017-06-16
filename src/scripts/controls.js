@@ -54,6 +54,10 @@ const removeTabIndexForAll = forEach(removeTabIndex);
  */
 const setTabIndexZero = setAttribute('tabindex', '0');
 /**
+ * @type {function} setTabIndexMinusOne
+ */
+const setTabIndexMinusOne = setAttribute('tabindex', '-1');
+/**
  * @type {function} hasTabIndex
  */
 const hasTabIndex = hasAttribute('tabindex');
@@ -79,6 +83,11 @@ export default class Controls {
      * @property {HTMLElement[]} elements
      */
     this.elements = [];
+
+    /**
+     * @property {boolean} useNegativeTabIndex
+     */
+    this.negativeTabIndexAllowed = false;
 
     // move tabindex to next element
     this.on('nextElement', this.nextElement, this);
@@ -121,7 +130,7 @@ export default class Controls {
 
     // if removed element was selected
     if(hasTabIndex(el)) {
-      removeTabIndex(el);
+      this.setUntabbable(el);
 
       // set first element selected if exists
       if(this.elements[0]) {
@@ -173,9 +182,23 @@ export default class Controls {
    * @public
    */
   setTabbable(el) {
-    removeTabIndexForAll(this.elements);
+    forEach(this.setUntabbable.bind(this), this.elements);
     setTabIndexZero(el);
     this.tabbableElement = el;
+  }
+
+  /**
+   * Removes tabbability from an element
+   *
+   * @param {HTMLElement} el
+   */
+  setUntabbable(el) {
+    if(this.negativeTabIndexAllowed) {
+      setTabIndexMinusOne(el);
+    }
+    else {
+      removeTabIndex(el);
+    }
   }
 
   /**
@@ -191,6 +214,18 @@ export default class Controls {
 
     this.setTabbable(prevEl);
     prevEl.focus();
+  }
+
+  /**
+   * Use tabindex="-1" instead of removing tabindex for non-focused elements
+   */
+  useNegativeTabIndex() {
+    this.negativeTabIndexAllowed = true;
+    this.elements.forEach(element => {
+      if(!element.hasAttribute('tabindex')){
+        setTabIndexMinusOne(element);
+      }
+    })
   }
 
   /**

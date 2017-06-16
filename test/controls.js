@@ -14,7 +14,7 @@ describe("Controls", function () {
     elements.forEach(el => controls.addElement(el));
 
     // only first element has tabindex
-    expect(elements[0].hasAttribute('tabindex')).toBeTruthy();
+    expect(elements[0].getAttribute('tabindex')).toBe('0');
     expect(elements[1].hasAttribute('tabindex')).toBeFalsy();
     expect(elements[2].hasAttribute('tabindex')).toBeFalsy();
   });
@@ -26,7 +26,7 @@ describe("Controls", function () {
 
     // only first element has tabindex
     expect(elements[0].hasAttribute('tabindex')).toBeFalsy();
-    expect(elements[1].hasAttribute('tabindex')).toBeTruthy();
+    expect(elements[1].getAttribute('tabindex')).toBe('0');
     expect(elements[2].hasAttribute('tabindex')).toBeFalsy();
   });
 
@@ -38,6 +38,19 @@ describe("Controls", function () {
     // only first element has tabindex
     expect(elements[0].hasAttribute('tabindex')).toBeFalsy();
     expect(elements[1].hasAttribute('tabindex')).toBeFalsy();
-    expect(elements[2].hasAttribute('tabindex')).toBeTruthy();
+    expect(elements[2].getAttribute('tabindex')).toBe('0');
+  });
+
+  it("should allow negative tabindexes when 'useNegativeTabIndex' is set", function () {
+    controls.useNegativeTabIndex();
+
+    // add elements to controls
+    elements.forEach(el => controls.addElement(el));
+    controls.firesEvent('previousElement', elements[0]);
+
+    // only first element has tabindex
+    expect(elements[0].getAttribute('tabindex')).toBe('-1');
+    expect(elements[1].getAttribute('tabindex')).toBe('-1');
+    expect(elements[2].getAttribute('tabindex')).toBe('0');
   });
 });
