@@ -115,6 +115,9 @@ export default class Controls {
     if (this.elements.length === 1) { // if first
       this.setTabbable(el);
     }
+    else if(this.negativeTabIndexAllowed) {
+      setTabIndexMinusOne(el);
+    }
   };
 
   /**
