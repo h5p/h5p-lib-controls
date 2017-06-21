@@ -19,6 +19,15 @@ describe("Controls", function () {
     expect(elements[2].hasAttribute('tabindex')).toBeFalsy();
   });
 
+  it("should add elements at a given position", function () {
+    // add elements to controls
+    elements.forEach(el => controls.insertElementAt(el, 0));
+
+    expect(controls.elements[0]).toBe(elements[2]);
+    expect(controls.elements[1]).toBe(elements[1]);
+    expect(controls.elements[2]).toBe(elements[0]);
+  });
+
   it("should move tabindex on next", function () {
     // add elements to controls
     elements.forEach(el => controls.addElement(el));

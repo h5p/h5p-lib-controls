@@ -121,6 +121,25 @@ export default class Controls {
    * Add controls to an element
    *
    * @param {HTMLElement} el
+   * @param {number} position
+   *
+   * @fires Controls#addElement
+   * @public
+   */
+  insertElementAt(el, position) {
+    this.elements.splice(position, 0, el);
+
+    this.firesEvent('addElement', el);
+
+    if (this.elements.length === 1) { // if first
+      this.setTabbable(el);
+    }
+  }
+
+  /**
+   * Add controls to an element
+   *
+   * @param {HTMLElement} el
    *
    * @fires Controls#addElement
    * @public
@@ -140,6 +159,15 @@ export default class Controls {
 
     this.firesEvent('removeElement', el);
   };
+
+  /**
+   * Returns the number of elements is controlled by this object
+   *
+   * @return {number}
+   */
+  count() {
+    return this.elements.length;
+  }
 
   /**
    * Fire event
