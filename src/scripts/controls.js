@@ -36,6 +36,11 @@ import { Eventful } from './mixins/eventful';
  * @type ControlsEvent
  */
 /**
+ * Close event
+ * @event Controls#close
+ * @type ControlsEvent
+ */
+/**
  * Drag element event
  * @event Controls#drag
  * @type ControlsEvent

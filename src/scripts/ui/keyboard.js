@@ -59,18 +59,21 @@ export default class Keyboard {
    */
   handleKeyDown(event) {
     switch (event.which) {
+      case 27: // Escape
+        this.close(event.target);
+        event.stopPropagation();
+        break;
       case 13: // Enter
       case 32: // Space
         this.select(event.target);
-        event.preventDefault();
+        event.stopPropagation();
         break;
-
       case 37: // Left Arrow
       case 38: // Up Arrow
         // ignore with modifiers, so not to interfere with Chromevox
         if(!this.hasChromevoxModifiers(event)) {
           this.previousElement(event.target);
-          event.preventDefault();
+          event.stopPropagation();
         }
         break;
       case 39: // Right Arrow
@@ -78,7 +81,7 @@ export default class Keyboard {
         // ignore with modifiers, so not to interfere with Chromevox
         if(!this.hasChromevoxModifiers(event)) {
           this.nextElement(event.target);
-          event.preventDefault();
+          event.stopPropagation();
         }
         break;
     }
@@ -145,5 +148,18 @@ export default class Keyboard {
    */
   enableSelectability() {
     this.selectability = true;
+  }
+
+  /**
+   * Fires the close event
+   *
+   * @param {HTMLElement|EventTarget} el
+   * @fires Controls#close
+   */
+  close(el) {
+    if(this.controls.firesEvent('before-close', el) !== false) {
+      this.controls.firesEvent('close', el);
+      this.controls.firesEvent('after-close', el)
+    }
   }
 }
