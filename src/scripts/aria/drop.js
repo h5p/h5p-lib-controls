@@ -1,5 +1,5 @@
-import {setAttribute, hasAttribute} from 'h5p-sdk/src/scripts/utils/elements';
-import {compose, forEach, filter} from 'h5p-sdk/src/scripts/utils/functional';
+import {setAttribute, hasAttribute} from '../utils/elements';
+import {compose, forEach, filter} from '../utils/functional';
 
 /**
  * @type {string}

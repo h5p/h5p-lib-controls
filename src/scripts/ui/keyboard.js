@@ -61,11 +61,13 @@ export default class Keyboard {
     switch (event.which) {
       case 27: // Escape
         this.close(event.target);
+        event.preventDefault();
         event.stopPropagation();
         break;
       case 13: // Enter
       case 32: // Space
         this.select(event.target);
+        event.preventDefault();
         event.stopPropagation();
         break;
       case 37: // Left Arrow
@@ -73,6 +75,7 @@ export default class Keyboard {
         // ignore with modifiers, so not to interfere with Chromevox
         if(!this.hasChromevoxModifiers(event)) {
           this.previousElement(event.target);
+          event.preventDefault();
           event.stopPropagation();
         }
         break;
@@ -81,6 +84,7 @@ export default class Keyboard {
         // ignore with modifiers, so not to interfere with Chromevox
         if(!this.hasChromevoxModifiers(event)) {
           this.nextElement(event.target);
+          event.preventDefault();
           event.stopPropagation();
         }
         break;

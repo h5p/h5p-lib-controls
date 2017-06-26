@@ -1,6 +1,6 @@
 {
   "name": "h5p-lib-controls",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Library for adding user input to web applications",
   "scripts": {
     "test": "karma start",
@@ -32,7 +32,5 @@
     "url-loader": "^0.5.8",
     "webpack": "^2.2.1"
   },
-  "dependencies": {
-    "h5p-sdk": "^0.1.0"
-  }
+  "dependencies": {}
 }
