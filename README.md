@@ -3,24 +3,11 @@ H5P Library - Controls
 
 [![Build Status](https://travis-ci.org/h5p/h5p-lib-controls.svg?branch=master)](https://travis-ci.org/h5p/h5p-lib-controls)
 
-## Building
-
-Get the [h5p-lib-controls](https://github.com/h5p/h5p-lib-controls), and link it to this project.
-
-```bash
- cd ..
- git clone git@github.com:h5p/h5p-lib-controls.git
- cd h5p-lib-controls
- npm link
- cd ../h5p-hub-client
- npm link h5p-lib-controls
-```
-
 ## Getting started
 
-Grab all the modules:
+Grab all the module:
 ```bash
-npm install
+npm i --save-development h5p-lib-controls
 ```
 
 Run tests:
@@ -47,13 +34,13 @@ import UIKeyboard from 'h5p-lib-controls/src/scripts/ui/keyboard';
 const controls =  new Controls([new UIKeyboard()]);
 
 // Add support for ENTER and SPACE
-this.controls.on('select', event => console.log('user selected element', event.element));
+controls.on('select', event => console.log('user selected element', event.element));
 
 // Add support for ESC
-this.controls.on('close', event => console.log('perform closing action'));
+controls.on('close', event => console.log('perform closing action'));
 ```
 
-### Using [tabindex="-1"]
+### Using negative tabindex
 
 By default *h5p-lib-controls* will remove `[tabindex]` from the elements that are not selected. If you instead want to use `[tabindex="-1"]`, you can do the following:
 
