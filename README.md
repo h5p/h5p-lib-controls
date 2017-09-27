@@ -49,10 +49,10 @@ import AriaDrop from 'h5p-lib-controls/src/scripts/aria/drop';
 import UIKeyboard from 'h5p-lib-controls/src/scripts/ui/keyboard';
 
 // trigger [aria-grabbed="true"] with keyboard
-const dragControls = new Controls([new UIKeyboard(), this.ariaDragControls]);
+const dragControls = new Controls([new UIKeyboard(), new AriaDrag()]);
 
 // trigger [aria-dropeffect="move"] with keyboard
-const dropControls = new Controls([new UIKeyboard(), this.ariaDropControls]);
+const dropControls = new Controls([new UIKeyboard(), new AriaDrop()]);
 ```
 
 ### Using negative tabindex
