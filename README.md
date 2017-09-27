@@ -40,6 +40,17 @@ controls.on('select', event => console.log('user selected element', event.elemen
 controls.on('close', event => console.log('perform closing action'));
 ```
 
+### Moving [aria-selected]
+
+```javascript
+import Controls from 'h5p-lib-controls/src/scripts/controls';
+import UIKeyboard from 'h5p-lib-controls/src/scripts/ui/keyboard';
+import AriaSelected from 'h5p-lib-controls/src/scripts/aria/selected';
+
+// this control will also apply [aria-selected="true"] on select event
+const controls =  new Controls([new UIKeyboard(), new AriaSelected()]);
+```
+
 ### Drag and drop
 
 ```javascript
