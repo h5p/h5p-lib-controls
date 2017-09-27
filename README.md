@@ -35,6 +35,8 @@ npm run build
 
 ## Usage
 
+### Keyboard navigation
+
 To get keyboard navigation using arrow keys between elements you can do the following:
 
 ```javascript
@@ -44,12 +46,14 @@ import UIKeyboard from 'h5p-lib-controls/src/scripts/ui/keyboard';
 // Add support for arrow keys + HOME + END
 const controls =  new Controls([new UIKeyboard()]);
 
-// listen for the select event, that is triggered on ENTER or SPACE
+// Add support for ENTER and SPACE
 this.controls.on('select', event => console.log('user selected element', event.element));
 
-// listen for the user pressing ESC
+// Add support for ESC
 this.controls.on('close', event => console.log('perform closing action'));
 ```
+
+### Using [tabindex="-1"]
 
 By default *h5p-lib-controls* will remove `[tabindex]` from the elements that are not selected. If you instead want to use `[tabindex="-1"]`, you can do the following:
 
