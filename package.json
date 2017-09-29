@@ -1,6 +1,6 @@
 {
   "name": "h5p-lib-controls",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Library for adding user input to web applications",
   "scripts": {
     "test": "karma start",

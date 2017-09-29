@@ -209,6 +209,20 @@ export default class Controls {
   }
 
   /**
+   * Selects the element at a position given by argument
+   *
+   * @param {number} index
+   * @public
+   */
+  setTabbableByIndex(index) {
+    const nextEl = this.elements[index];
+
+    if (nextEl) {
+      this.setTabbable(nextEl);
+    }
+  }
+
+  /**
    * Sets tabindex on an element, remove it from all others
    *
    * @param {HTMLElement} el
