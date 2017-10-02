@@ -100,6 +100,12 @@ export default class Controls {
     // move tabindex to previous element
     this.on('previousElement', this.previousElement, this);
 
+    // move tabindex for fist element
+    this.on('firstElement', this.firstElement, this);
+
+    // move tabindex for last element
+    this.on('lastElement', this.lastElement, this);
+
     // init plugins
     this.initPlugins();
   }
@@ -206,6 +212,28 @@ export default class Controls {
 
     this.setTabbable(nextEl);
     nextEl.focus();
+  }
+
+  /**
+   * Sets tabindex on the first element, remove it from all others
+   *
+   * @private
+   */
+  firstElement() {
+    const element = this.elements[0];
+    this.setTabbable(element);
+    element.focus();
+  }
+
+  /**
+   * Sets tabindex on the first element, remove it from all others
+   *
+   * @private
+   */
+  lastElement() {
+    const element = this.elements[this.elements.length - 1];
+    this.setTabbable(element);
+    element.focus();
   }
 
   /**

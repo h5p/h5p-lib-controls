@@ -64,6 +64,16 @@ export default class Keyboard {
         event.preventDefault();
         event.stopPropagation();
         break;
+      case 35: // End
+        this.lastElement(event.target);
+        event.preventDefault();
+        event.stopPropagation();
+        break;
+      case 36: // Home
+        this.firstElement(event.target);
+        event.preventDefault();
+        event.stopPropagation();
+        break;
       case 13: // Enter
       case 32: // Space
         this.select(event.target);
@@ -108,7 +118,10 @@ export default class Keyboard {
    * @fires Controls#previousElement
    */
   previousElement(el) {
-    this.controls.firesEvent('previousElement', el)
+    if(this.controls.firesEvent('beforePreviousElement', el) !== false) {
+      this.controls.firesEvent('previousElement', el);
+      this.controls.firesEvent('afterPreviousElement', el);
+    }
   };
 
   /**
@@ -118,7 +131,10 @@ export default class Keyboard {
    * @fires Controls#nextElement
    */
   nextElement(el) {
-    this.controls.firesEvent('nextElement', el)
+    if(this.controls.firesEvent('beforeNextElement', el) !== false) {
+      this.controls.firesEvent('nextElement', el);
+      this.controls.firesEvent('afterNextElement', el);
+    }
   };
 
   /**
@@ -133,6 +149,32 @@ export default class Keyboard {
         this.controls.firesEvent('select', el);
         this.controls.firesEvent('after-select', el)
       }
+    }
+  };
+
+  /**
+   * Fire the next element event
+   *
+   * @param {HTMLElement|EventTarget} el
+   * @fires Controls#nextElement
+   */
+  firstElement(el) {
+    if(this.controls.firesEvent('beforeFirstElement', el) !== false) {
+      this.controls.firesEvent('firstElement', el);
+      this.controls.firesEvent('afterFirstElement', el);
+    }
+  };
+
+  /**
+   * Fire the next element event
+   *
+   * @param {HTMLElement|EventTarget} el
+   * @fires Controls#nextElement
+   */
+  lastElement(el) {
+    if(this.controls.firesEvent('beforeLastElement', el) !== false) {
+      this.controls.firesEvent('lastElement', el);
+      this.controls.firesEvent('afterLastElement', el);
     }
   };
 
