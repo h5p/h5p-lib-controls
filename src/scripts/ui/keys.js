@@ -74,10 +74,14 @@ export const isSpaceOrEnterKey = (event) => {
  */
 export const onKey = ($element, keys, callback) => {
   $element.on('keydown', (event) => {
-    for (var i = 0; i < keys.lengh; i++) {
+    for (let i = 0; i < keys.length; i++) {
       const keySetup = keys[i];
+
       if (isKey(event, [keySetup.key], {ctrl: keySetup.ctrl, shift: keySetup.shift})) {
-        return callback();
+        if (keySetup.preventDefault) {
+          event.preventDefault();
+        }
+        return callback(event);
       }
     }
   });
