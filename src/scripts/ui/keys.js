@@ -1,6 +1,11 @@
+// A key-to-keycode map:
 export const Keys = {
   ENTER: 13,
   SPACE: 32,
+  ARROW_LEFT: 37,
+  ARROW_UP: 38,
+  ARROW_RIGHT: 39,
+  ARROW_DOWN: 40,
   A: 65,
   B: 66,
   C: 67,
@@ -29,8 +34,15 @@ export const Keys = {
   Z: 90
 };
 
-export const isKey = (event, key, control = {ctrl: false, shift: false}) => {
-  if (event.which !== key) {
+/**
+ * Check if a jQuery event is triggered by certain keys
+ * @param  {jQuery.Event} event
+ * @param  {number[]} keys
+ * @param  {Object} control Supports checking if ctrl and/or shift is currently active
+ * @return {boolean}
+ */
+export const isKey = (event, keys, control = {ctrl: false, shift: false}) => {
+  if (keys.indexOf(event.which) === -1) {
     return false;
   }
 
@@ -43,4 +55,30 @@ export const isKey = (event, key, control = {ctrl: false, shift: false}) => {
   }
 
   return true;
+};
+
+/**
+ * Check if a jQuery event is triggered by ENTER or SPACE
+ * @param {jQuery.Event} event
+ * @return {boolean}
+ */
+export const isSpaceOrEnterKey = (event) => {
+  return [Keys.ENTER, Keys.SPACE].indexOf(event.which) !== -1;
+};
+
+/**
+ * Listen for certain keys, and trigger listener
+ * @param  {jQuery} $element Element to listen on
+ * @param  {Object[]} keys Example: {key: keycode, ctrl: true/false, shift: true/false}
+ * @param  {Function} callback
+ */
+export const onKey = ($element, keys, callback) => {
+  $element.on('keydown', (event) => {
+    for (var i = 0; i < keys.lengh; i++) {
+      const keySetup = keys[i];
+      if (isKey(event, [keySetup.key], {ctrl: keySetup.ctrl, shift: keySetup.shift})) {
+        return callback();
+      }
+    }
+  });
 };
