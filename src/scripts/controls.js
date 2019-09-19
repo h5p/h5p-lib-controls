@@ -268,6 +268,10 @@ export default class Controls {
    * @param {HTMLElement} el
    */
   setUntabbable(el) {
+    if (el === document.activeElement) {
+      return;
+    }
+
     if(this.negativeTabIndexAllowed) {
       setTabIndexMinusOne(el);
     }
