@@ -6,10 +6,10 @@ import {Keys, onKey} from './keys'
  * @param {Function} callback
  * @param {Object}
  */
-export const onClick = ($element, callback, {ignoreKeyboard = false, preventDefault = true} = {}) => {
+export const onClick = ($element, callback, {ignoreKeyboard = false, preventDefaultForKeys = true} = {}) => {
 
   const doCallback = (event) => {
-    if (preventDefault) {
+    if (event.type !== 'click' && preventDefaultForKeys) {
       event.preventDefault();
     }
     callback(event);
