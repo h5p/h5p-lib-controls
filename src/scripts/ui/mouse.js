@@ -8,6 +8,8 @@ export default class Mouse {
      * @property {boolean} selectability
      */
     this.selectability = true;
+    this.handleClickBound = this.handleClick.bind(this);
+    this.handleDragBound = this.handleDrag.bind(this);
   }
 
   /**
@@ -21,6 +23,8 @@ export default class Mouse {
      */
     this.controls = controls;
     this.controls.on('addElement', this.listenForKeyDown, this);
+    this.controls.on('removeElement', this.unlistenForKeyDown, this);
+    
   };
 
   /**
@@ -30,8 +34,19 @@ export default class Mouse {
    * @private
    */
   listenForKeyDown({element}) {
-    element.addEventListener('click', this.handleClick.bind(this));
-    element.addEventListener('drag', this.handleDrag.bind(this));
+    element.addEventListener('click', this.handleClickBound);
+    element.addEventListener('drag', this.handleClickBound);
+  };
+
+  /** 
+   * Remove listeners 
+   * 
+   * @param {HTMLElement} element
+   * @private
+  */
+  unlistenForKeyDown({element}) {
+    element.removeEventListener('click', this.handleClickBound);
+    element.removeEventListener('drag', this.handleDragBound);
   };
 
   /**
