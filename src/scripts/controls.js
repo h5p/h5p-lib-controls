@@ -126,6 +126,9 @@ export default class Controls {
     if (this.elements.length === 1) { // if first
       this.setTabbable(el);
     }
+    else {
+      this.setUntabbable(el);
+    }
   };
 
   /**
@@ -144,6 +147,9 @@ export default class Controls {
 
     if (this.elements.length === 1) { // if first
       this.setTabbable(el);
+    }
+    else {
+      this.setUntabbable(el);
     }
   }
 
@@ -210,8 +216,7 @@ export default class Controls {
     const isLastElement = index === (this.elements.length - 1);
     const nextEl = this.elements[isLastElement ? 0 : (index + 1)];
 
-    this.setTabbable(nextEl);
-    nextEl.focus();
+    this.moveFocus(nextEl);
   }
 
   /**
@@ -221,19 +226,17 @@ export default class Controls {
    */
   firstElement() {
     const element = this.elements[0];
-    this.setTabbable(element);
-    element.focus();
+    this.moveFocus(element);
   }
 
   /**
-   * Sets tabindex on the first element, remove it from all others
+   * Sets tabindex on the last element, remove it from all others
    *
    * @private
    */
   lastElement() {
     const element = this.elements[this.elements.length - 1];
-    this.setTabbable(element);
-    element.focus();
+    this.moveFocus(element);
   }
 
   /**
@@ -245,7 +248,7 @@ export default class Controls {
   setTabbableByIndex(index) {
     const nextEl = this.elements[index];
 
-    if (nextEl) {
+    if (nextEl) {
       this.setTabbable(nextEl);
     }
   }
@@ -281,6 +284,28 @@ export default class Controls {
   }
 
   /**
+   * Ensures tabindexes are updated properly before and after moving focus
+   * @param {HTMLElement} element The element to focus
+   */
+  moveFocus(element) {
+    const previousFocused = document.activeElement;
+
+    this.setTabbable(element);
+    element.focus();
+
+    // Update the tabindex of the previously active element
+    // This is not done by setUntabbable, as it would break screen readers
+    if (previousFocused !== element && this.elements.includes(previousFocused)) {
+      if (this.negativeTabIndexAllowed) {
+        setTabIndexMinusOne(previousFocused);
+      }
+      else {
+        removeTabIndex(previousFocused);
+      }
+    }
+  }
+
+  /**
    * Sets tabindex on an element, remove it from all others
    *
    * @param {number} index
@@ -291,8 +316,7 @@ export default class Controls {
     const isFirstElement = index === 0;
     const prevEl = this.elements[isFirstElement ? (this.elements.length - 1) : (index - 1)];
 
-    this.setTabbable(prevEl);
-    prevEl.focus();
+    this.moveFocus(prevEl);
   }
 
   /**
