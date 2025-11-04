@@ -118,7 +118,7 @@ export default class Controls {
    * @fires Controls#addElement
    * @public
    */
-  addElement(el) {
+  addElement(el) {
     this.elements.push(el);
 
     this.firesEvent('addElement', el);
@@ -129,7 +129,7 @@ export default class Controls {
     else {
       this.setUntabbable(el);
     }
-  };
+  }
 
   /**
    * Add controls to an element
@@ -161,21 +161,21 @@ export default class Controls {
    * @fires Controls#addElement
    * @public
    */
-  removeElement(el) {
+  removeElement(el) {
     this.elements = without([el], this.elements);
 
     // if removed element was selected
-    if(hasTabIndex(el)) {
+    if (hasTabIndex(el)) {
       this.setUntabbable(el);
 
       // set first element selected if exists
-      if(this.elements[0]) {
+      if (this.elements[0]) {
         this.setTabbable(this.elements[0]);
       }
     }
 
     this.firesEvent('removeElement', el);
-  };
+  }
 
   /**
    * Returns the number of elements is controlled by this object
@@ -275,7 +275,7 @@ export default class Controls {
       return;
     }
 
-    if(this.negativeTabIndexAllowed) {
+    if (this.negativeTabIndexAllowed) {
       setTabIndexMinusOne(el);
     }
     else {
@@ -325,10 +325,10 @@ export default class Controls {
   useNegativeTabIndex() {
     this.negativeTabIndexAllowed = true;
     this.elements.forEach(element => {
-      if(!element.hasAttribute('tabindex')){
+      if (!element.hasAttribute('tabindex')) {
         setTabIndexMinusOne(element);
       }
-    })
+    });
   }
 
   /**
@@ -336,9 +336,9 @@ export default class Controls {
    *
    * @private
    */
-  initPlugins() {
-    this.plugins.forEach(function(plugin){
-      if(plugin.init !== undefined){
+  initPlugins() {
+    this.plugins.forEach(function (plugin) {
+      if (plugin.init !== undefined) {
         plugin.init(this);
       }
     }, this);
