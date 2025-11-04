@@ -118,7 +118,7 @@ export default class Controls {
    * @fires Controls#addElement
    * @public
    */
-  addElement(el) {
+  addElement(el) {
     this.elements.push(el);
 
     this.firesEvent('addElement', el);
@@ -126,7 +126,10 @@ export default class Controls {
     if (this.elements.length === 1) { // if first
       this.setTabbable(el);
     }
-  };
+    else {
+      this.setUntabbable(el);
+    }
+  }
 
   /**
    * Add controls to an element
@@ -145,6 +148,9 @@ export default class Controls {
     if (this.elements.length === 1) { // if first
       this.setTabbable(el);
     }
+    else {
+      this.setUntabbable(el);
+    }
   }
 
   /**
@@ -155,21 +161,21 @@ export default class Controls {
    * @fires Controls#addElement
    * @public
    */
-  removeElement(el) {
+  removeElement(el) {
     this.elements = without([el], this.elements);
 
     // if removed element was selected
-    if(hasTabIndex(el)) {
+    if (hasTabIndex(el)) {
       this.setUntabbable(el);
 
       // set first element selected if exists
-      if(this.elements[0]) {
+      if (this.elements[0]) {
         this.setTabbable(this.elements[0]);
       }
     }
 
     this.firesEvent('removeElement', el);
-  };
+  }
 
   /**
    * Returns the number of elements is controlled by this object
@@ -210,8 +216,7 @@ export default class Controls {
     const isLastElement = index === (this.elements.length - 1);
     const nextEl = this.elements[isLastElement ? 0 : (index + 1)];
 
-    this.setTabbable(nextEl);
-    nextEl.focus();
+    this.moveFocus(nextEl);
   }
 
   /**
@@ -221,19 +226,17 @@ export default class Controls {
    */
   firstElement() {
     const element = this.elements[0];
-    this.setTabbable(element);
-    element.focus();
+    this.moveFocus(element);
   }
 
   /**
-   * Sets tabindex on the first element, remove it from all others
+   * Sets tabindex on the last element, remove it from all others
    *
    * @private
    */
   lastElement() {
     const element = this.elements[this.elements.length - 1];
-    this.setTabbable(element);
-    element.focus();
+    this.moveFocus(element);
   }
 
   /**
@@ -245,7 +248,7 @@ export default class Controls {
   setTabbableByIndex(index) {
     const nextEl = this.elements[index];
 
-    if (nextEl) {
+    if (nextEl) {
       this.setTabbable(nextEl);
     }
   }
@@ -272,11 +275,33 @@ export default class Controls {
       return;
     }
 
-    if(this.negativeTabIndexAllowed) {
+    if (this.negativeTabIndexAllowed) {
       setTabIndexMinusOne(el);
     }
     else {
       removeTabIndex(el);
+    }
+  }
+
+  /**
+   * Ensures tabindexes are updated properly before and after moving focus
+   * @param {HTMLElement} element The element to focus
+   */
+  moveFocus(element) {
+    const previousFocused = document.activeElement;
+
+    this.setTabbable(element);
+    element.focus();
+
+    // Update the tabindex of the previously active element
+    // This is not done by setUntabbable, as it would break screen readers
+    if (previousFocused !== element && this.elements.includes(previousFocused)) {
+      if (this.negativeTabIndexAllowed) {
+        setTabIndexMinusOne(previousFocused);
+      }
+      else {
+        removeTabIndex(previousFocused);
+      }
     }
   }
 
@@ -291,8 +316,7 @@ export default class Controls {
     const isFirstElement = index === 0;
     const prevEl = this.elements[isFirstElement ? (this.elements.length - 1) : (index - 1)];
 
-    this.setTabbable(prevEl);
-    prevEl.focus();
+    this.moveFocus(prevEl);
   }
 
   /**
@@ -301,10 +325,10 @@ export default class Controls {
   useNegativeTabIndex() {
     this.negativeTabIndexAllowed = true;
     this.elements.forEach(element => {
-      if(!element.hasAttribute('tabindex')){
+      if (!element.hasAttribute('tabindex')) {
         setTabIndexMinusOne(element);
       }
-    })
+    });
   }
 
   /**
@@ -312,9 +336,9 @@ export default class Controls {
    *
    * @private
    */
-  initPlugins() {
-    this.plugins.forEach(function(plugin){
-      if(plugin.init !== undefined){
+  initPlugins() {
+    this.plugins.forEach(function (plugin) {
+      if (plugin.init !== undefined) {
         plugin.init(this);
       }
     }, this);
