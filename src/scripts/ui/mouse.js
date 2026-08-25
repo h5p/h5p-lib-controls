@@ -35,7 +35,7 @@ export default class Mouse {
    */
   listenForKeyDown({element}) {
     element.addEventListener('click', this.handleClickBound);
-    element.addEventListener('drag', this.handleClickBound);
+    element.addEventListener('drag', this.handleDragBound);
   };
 
   /** 
